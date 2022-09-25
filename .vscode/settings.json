@@ -30,6 +30,8 @@
   ],
   "files.associations": {
     "*.css": "tailwindcss",
-    "stdio.h": "c"
-  }
+    "stdio.h": "c",
+    "stdlib.h": "c"
+  },
+  "C_Cpp.errorSquiggles": "Enabled"
 }
