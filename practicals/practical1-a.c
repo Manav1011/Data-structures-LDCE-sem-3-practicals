@@ -1,12 +1,14 @@
-// Introduction to pointers. Call by Value and Call by reference.
+/* Introduction to pointers. Call by Value and Call by ra) Introduction to pointers. 
+Call by Value and Call by reference. b)
+Introduction to Dynamic Memory Allocation. DMA functions malloc(),
+calloc(), free() etc.eference. */
 #include <stdio.h>
-
 void CallByValue(int number){
     number = number +100;
 }
 
 void CallByReference(int* number){
-    (*number) += +100;
+    (*number) += 100;
 }
 int main(){
     int number = 10;

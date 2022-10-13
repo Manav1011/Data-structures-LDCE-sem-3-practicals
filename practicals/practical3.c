@@ -1,109 +1,79 @@
+// Write a program to implement QUEUE using arrays that performs following operations (a) INSERT (b) DELETE (c) DISPLAY
 #include <stdio.h>
 #include <stdlib.h>
 
-int a[4];
-int n = 4;
-int top = -1;
+struct queue{
+    int n;
+    int front;
+    int rear;
+    int *arr;
+};
 
-void peep()
-{
-    int i;
-    printf("Enter the index of the element you want to access\n");
-    scanf("%d", &i);
-    if (((top - i) + 1) <= 0)
-    {
-        printf("Stack index out of bounds\n");
-        exit(0);
+int isEmpty(struct queue *q){
+    if (q->front == q->rear){
+        return 1;
     }
-    printf("%d", a[(top - i) + 1]);
+    return 0;
 }
 
-void change(){
-    int x,i;
-    printf("Enter the index of the element you want to change\n");
-    scanf("%d", &i);
-    printf("Enter the value you want to add\n");
-    scanf("%d", &x);
-    if (((top - i) + 1) <= 0)
-    {
-        printf("Stack index out of bounds\n");
-        exit(0);
+int isFull(struct queue *q){
+    if (q->rear == q->n-1){
+        return 1;
     }
-    a[(top - i) + 1] = x;
+    return 0;
 }
 
-void pop()
-{
-    if (top < 0)
-    {
-        printf("Stack is empty");
-        exit(0);
-    }
-    printf("%d\n", a[top]);
-    top--;
-}
 
-int print()
-{
-    for (int i = 5; i >= 0; i--)
-    {
-        printf("%d\n", a[i]);
+int Enqueue(struct queue *q, int val){    
+    if(q->front == -1 && q->rear == -1){        
+        q->rear ++;
+        q->front++;
+        q->arr[q->rear] = val;
+        printf("Enqued element: %d\n", val);
+        return 0;
     }
-}
-int push()
-{
-    if (top > n)
-    {
-        printf("The stack is overflowed!\n");
-        print();
-        exit(0);
-    }
-    else
-    {
-        int value;
-        printf("Enter the value you wanna push\n");
-        scanf("%d", &value);
-        top++;
-        a[top] = value;
+    if (isFull(q)){
+        printf("Queue is full\n");
+        return 1;
+    }else{
+        q->rear ++;
+        q->arr[q->rear] = val;
+        printf("Enqued element: %d\n", val);
+        return 0;
     }
 }
 
-int main()
-{
-    int choice;
-    do
-    {
-        printf("\n");
-        printf("1: PUSH\n2: POP\n3:PEEP\n4:CHANGE\n5:print\n6:EXIT\n");
-        printf("Enter Your choice:");
-        scanf("%d", &choice);
-        if (choice == 1)
-        {
-            push();
-            printf("Current top element is %d\n", top);
-        }
-        else if (choice == 2)
-        {
-            pop();
-            printf("Current top element is %d\n", top);
-        }
-        else if (choice == 3)
-        {
-            peep();
-            printf("Current top element is %d\n", top);
-        }
-        else if (choice == 4)
-        {
-            change();
-            printf("Current top element is %d\n", top);
-        }
-        else if (choice == 5)
-        {
-            print();
-        }
-        else if (choice == 6)
-        {
-            return 0;
-        }
-    } while (choice != 6);
+int Dequeue(struct queue *q){    
+    if(isEmpty(q)){
+        printf("The queue is empty\n");
+        return 1;
+    }
+    else{
+        printf("Dequed element is :%d\n", q->arr[q->front]);
+        q->front++;
+        return 0;
+    }
+}
+
+int Display(struct queue *q){
+    // printf("Front is : %d\n",q->front);
+    printf("Queue is ");
+    for(int i = q->front;i< q->n-1 ; i++){
+        printf("%d  ", q->arr[i]);
+    }
+    return 0;
+}
+
+int main(){
+    struct queue q;
+    printf("Enter the size of queue\n");
+    scanf("%d",&q.n);    
+    int val;
+    q.front = q.rear = -1;
+    q.arr = (int *) malloc(q.n * sizeof(int));
+    Enqueue(&q,1);
+    Enqueue(&q,2);
+    Enqueue(&q,3);
+    Dequeue(&q);
+    Display(&q);
 }
