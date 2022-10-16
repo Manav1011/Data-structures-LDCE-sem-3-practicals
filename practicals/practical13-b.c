@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void MergeTwo(int *elements,int *left,int leftlength,int *right,int rightlength){
+void MergeTwo(int *left,int llength,int *right,int rlength,int *elements){
     int i=0,j=0,k=0;
-    while(i<leftlength && j<rightlength){
-        if (left[i] < right[j]){
+    while(i<llength && j< rlength){
+        if(left[i] < right[j]){
             elements[k] = left[i];
             i++;
         }
@@ -14,44 +14,39 @@ void MergeTwo(int *elements,int *left,int leftlength,int *right,int rightlength)
         }
         k++;
     }
-    while(i<leftlength){
-        elements[k] = left[i];
+    while(i<llength){
+        elements[k]=left[i];
         i++;
         k++;
     }
-    while(j<leftlength){
+    while(j<rlength){
         elements[k] = right[j];
         j++;
         k++;
     }
 }
 void MergeSort(int *elements,int length){
-    if (length <=1){
+    if(length <= 1){
         return;
     }
-    int *left;
-    int *right;
-    left = malloc(sizeof(int));
-    right = malloc(sizeof(int));
-    int mid = length / 2;
-    // Left part
-    int i=0;
-    for(i=0;i<mid;i++){
+    int mid  = length /2;
+    int left[mid];    
+    int i;
+    for(i = 0; i<mid; i++){
         left[i] = elements[i];
     }
-    // right part
-    int j=0;
-    for(j = mid; j<length; j++){
-        right[j-mid] = elements[j];
-    }   
+    int right[length-mid];
+    int j;
+    for(j=0; j < length-mid; j++){
+        right[j] = elements[j + mid];
+    }
     MergeSort(left,i);
-    MergeSort(right,j-mid);
-    MergeTwo(elements,left,i,right,j-mid);
-
+    MergeSort(right,j);
+    MergeTwo(left,i,right,j,elements);
 }
 int main(){
-    int elements[] = {1,4,2,5,3,6,7};
-    int length = sizeof(elements) / 4;
+    int elements[] = {-1,-5,-3,5,2,4,5};
+    int length = sizeof(elements) / 4;    
     MergeSort(elements,length);
     for(int i=0;i<length;i++){
         printf("%d  ",elements[i]);
